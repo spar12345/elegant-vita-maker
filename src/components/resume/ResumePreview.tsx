@@ -8,9 +8,19 @@ import { format } from "date-fns";
 
 interface ResumePreviewProps {
   resumeData: ResumeData;
+  sectionTitles: {
+    personal: string;
+    summary: string;
+    experience: string;
+    education: string;
+    skills: string;
+    projects: string;
+    certifications: string;
+    awards: string;
+  };
 }
 
-export function ResumePreview({ resumeData }: ResumePreviewProps) {
+export function ResumePreview({ resumeData, sectionTitles }: ResumePreviewProps) {
   const resumeRef = useRef<HTMLDivElement>(null);
 
   const formatDate = (dateString: string) => {
@@ -38,29 +48,33 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
         <head>
           <title>${resumeData.personalInfo.fullName || 'Resume'}</title>
           <style>
+            @page { 
+              size: A4; 
+              margin: 0.5in; 
+            }
             body { 
               font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
               margin: 0; 
-              padding: 20px; 
+              padding: 0; 
               background: white;
               color: black;
-              line-height: 1.3;
-              font-size: 12px;
+              line-height: 1.2;
+              font-size: 11px;
             }
             .resume-container { 
-              max-width: 210mm; 
-              margin: 0 auto; 
+              max-width: 100%; 
+              margin: 0; 
               background: white;
-              padding: 20px;
+              padding: 0;
             }
-            h1 { font-size: 24px; margin-bottom: 6px; color: #1a1a1a; }
-            h2 { font-size: 16px; margin: 16px 0 8px 0; color: #1a1a1a; border-bottom: 1px solid #e5e7eb; padding-bottom: 3px; }
-            h3 { font-size: 14px; margin: 10px 0 3px 0; color: #1a1a1a; }
-            p, li { font-size: 12px; margin: 2px 0; color: #374151; }
-            .contact-info { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; font-size: 12px; }
-            .contact-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; font-size: 12px; }
-            .experience-item, .education-item, .project-item, .cert-item, .award-item { 
-              margin-bottom: 12px; 
+            h1 { font-size: 20px; margin-bottom: 4px; color: #1a1a1a; }
+            h2 { font-size: 14px; margin: 12px 0 6px 0; color: #1a1a1a; border-bottom: 1px solid #e5e7eb; padding-bottom: 2px; }
+            h3 { font-size: 12px; margin: 8px 0 2px 0; color: #1a1a1a; }
+            p, li { font-size: 10px; margin: 1px 0; color: #374151; }
+            .contact-info { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; font-size: 10px; }
+            .contact-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; font-size: 10px; }
+            .item-container { 
+              margin-bottom: 8px; 
               display: flex; 
               justify-content: space-between; 
               align-items: flex-start;
@@ -70,13 +84,14 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
               text-align: right; 
               font-style: italic; 
               color: #6b7280; 
-              font-size: 11px;
-              min-width: 100px;
-              margin-left: 10px;
+              font-size: 9px;
+              min-width: 80px;
+              margin-left: 8px;
+              flex-shrink: 0;
             }
-            ul { margin: 6px 0 6px 16px; }
-            .tech-list { color: #6b7280; font-size: 11px; margin-top: 3px; }
-            a { color: #000000 !important; text-decoration: none; font-size: 12px; }
+            ul { margin: 4px 0 4px 12px; }
+            .tech-list { color: #6b7280; font-size: 9px; margin-top: 2px; }
+            a { color: #000000 !important; text-decoration: none; font-size: 10px; }
             .link-icon { display: none; }
             @media print { 
               body { -webkit-print-color-adjust: exact; }
@@ -136,7 +151,7 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
       </div>
 
       <Card className="w-full max-w-[8.5in] mx-auto bg-white text-black shadow-lg">
-        <CardContent className="p-6 space-y-5 text-sm" ref={resumeRef}>
+        <CardContent className="p-6 space-y-4 text-sm" ref={resumeRef}>
           {/* Header */}
           <div className="text-center border-b border-gray-200 pb-3">
             <h1 className="text-2xl font-bold text-gray-900 mb-2">
@@ -160,7 +175,7 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
           {resumeData.summary && (
             <section>
               <h2 className="text-lg font-bold text-gray-900 mb-2 border-b border-gray-200 pb-1">
-                PROFESSIONAL SUMMARY
+                {sectionTitles.summary.toUpperCase()}
               </h2>
               <p className="text-xs text-gray-700 leading-relaxed">{resumeData.summary}</p>
             </section>
@@ -170,11 +185,11 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
           {resumeData.experience.length > 0 && (
             <section>
               <h2 className="text-lg font-bold text-gray-900 mb-2 border-b border-gray-200 pb-1">
-                PROFESSIONAL EXPERIENCE
+                {sectionTitles.experience.toUpperCase()}
               </h2>
               <div className="space-y-3">
                 {resumeData.experience.map((exp) => (
-                  <div key={exp.id} className="experience-item">
+                  <div key={exp.id} className="item-container">
                     <div className="left-content">
                       <h3 className="font-bold text-gray-900 text-sm">{exp.position}</h3>
                       <p className="text-gray-700 font-medium text-sm">{exp.company}</p>
@@ -202,11 +217,11 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
           {resumeData.education.length > 0 && (
             <section>
               <h2 className="text-lg font-bold text-gray-900 mb-2 border-b border-gray-200 pb-1">
-                EDUCATION
+                {sectionTitles.education.toUpperCase()}
               </h2>
               <div className="space-y-2">
                 {resumeData.education.map((edu) => (
-                  <div key={edu.id} className="education-item">
+                  <div key={edu.id} className="item-container">
                     <div className="left-content">
                       <h3 className="font-bold text-gray-900 text-sm">{edu.degree} in {edu.field}</h3>
                       <p className="text-gray-700 text-sm">{edu.institution}</p>
@@ -232,7 +247,7 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
           {(resumeData.skills.technical.length > 0 || resumeData.skills.softSkills.length > 0 || resumeData.skills.toolsAndTechnologies.length > 0) && (
             <section>
               <h2 className="text-lg font-bold text-gray-900 mb-2 border-b border-gray-200 pb-1">
-                SKILLS
+                {sectionTitles.skills.toUpperCase()}
               </h2>
               <div className="space-y-1">
                 {resumeData.skills.technical.length > 0 && (
@@ -261,11 +276,11 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
           {resumeData.projects.length > 0 && (
             <section>
               <h2 className="text-lg font-bold text-gray-900 mb-2 border-b border-gray-200 pb-1">
-                PROJECTS
+                {sectionTitles.projects.toUpperCase()}
               </h2>
               <div className="space-y-2">
                 {resumeData.projects.map((project) => (
-                  <div key={project.id} className="project-item">
+                  <div key={project.id} className="item-container">
                     <div className="left-content">
                       <h3 className="font-bold text-gray-900 text-sm">{project.name}</h3>
                       <p className="text-xs text-gray-700 mb-1">{project.description}</p>
@@ -293,11 +308,11 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
           {resumeData.certifications.length > 0 && (
             <section>
               <h2 className="text-lg font-bold text-gray-900 mb-2 border-b border-gray-200 pb-1">
-                CERTIFICATIONS
+                {sectionTitles.certifications.toUpperCase()}
               </h2>
               <div className="space-y-2">
                 {resumeData.certifications.map((cert) => (
-                  <div key={cert.id} className="cert-item">
+                  <div key={cert.id} className="item-container">
                     <div className="left-content">
                       <h3 className="font-bold text-gray-900 text-sm">{cert.name}</h3>
                       <p className="text-gray-700 text-sm">{cert.issuer}</p>
@@ -316,11 +331,11 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
           {resumeData.awards.length > 0 && (
             <section>
               <h2 className="text-lg font-bold text-gray-900 mb-2 border-b border-gray-200 pb-1">
-                AWARDS & ACHIEVEMENTS
+                {sectionTitles.awards.toUpperCase()}
               </h2>
               <div className="space-y-2">
                 {resumeData.awards.map((award) => (
-                  <div key={award.id} className="award-item">
+                  <div key={award.id} className="item-container">
                     <div className="left-content">
                       <h3 className="font-bold text-gray-900 text-sm">{award.title}</h3>
                       <p className="text-gray-700 text-sm">{award.issuer}</p>

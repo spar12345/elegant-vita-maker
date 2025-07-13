@@ -16,27 +16,20 @@ import { ResumeData } from "@/types/resume";
 interface ResumeFormProps {
   resumeData: ResumeData;
   updateResumeData: (section: keyof ResumeData, data: any) => void;
+  sectionTitles: {
+    personal: string;
+    summary: string;
+    experience: string;
+    education: string;
+    skills: string;
+    projects: string;
+    certifications: string;
+    awards: string;
+  };
+  updateSectionTitle: (section: string, newTitle: string) => void;
 }
 
-export function ResumeForm({ resumeData, updateResumeData }: ResumeFormProps) {
-  const [sectionTitles, setSectionTitles] = useState({
-    personal: "Personal Information",
-    summary: "Professional Summary",
-    experience: "Professional Experience",
-    education: "Education",
-    skills: "Skills",
-    projects: "Projects",
-    certifications: "Certifications",
-    awards: "Awards & Achievements"
-  });
-
-  const updateSectionTitle = (section: keyof typeof sectionTitles, newTitle: string) => {
-    setSectionTitles(prev => ({
-      ...prev,
-      [section]: newTitle
-    }));
-  };
-
+export function ResumeForm({ resumeData, updateResumeData, sectionTitles, updateSectionTitle }: ResumeFormProps) {
   return (
     <Card className="w-full">
       <CardHeader>

@@ -31,6 +31,16 @@ const initialResumeData: ResumeData = {
 
 export function QuickResumeBuilder() {
   const [resumeData, setResumeData] = useState<ResumeData>(initialResumeData);
+  const [sectionTitles, setSectionTitles] = useState({
+    personal: "Personal Information",
+    summary: "Professional Summary",
+    experience: "Professional Experience",
+    education: "Education",
+    skills: "Skills",
+    projects: "Projects",
+    certifications: "Certifications",
+    awards: "Awards & Achievements"
+  });
 
   const updateResumeData = (section: keyof ResumeData, data: any) => {
     setResumeData(prev => ({
@@ -39,11 +49,18 @@ export function QuickResumeBuilder() {
     }));
   };
 
+  const updateSectionTitle = (section: string, newTitle: string) => {
+    setSectionTitles(prev => ({
+      ...prev,
+      [section]: newTitle
+    }));
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto py-6">
         <div className="mb-8 text-center">
-          <h1 className="text-4xl font-bold text-foreground mb-2">QuickResume Builder</h1>
+          <h1 className="text-4xl font-bold text-foreground mb-2">ResuMate Pro</h1>
           <p className="text-muted-foreground">Create a professional resume in minutes with ATS optimization</p>
         </div>
         
@@ -58,13 +75,18 @@ export function QuickResumeBuilder() {
               <div className="order-2 lg:order-1">
                 <ResumeForm 
                   resumeData={resumeData} 
-                  updateResumeData={updateResumeData} 
+                  updateResumeData={updateResumeData}
+                  sectionTitles={sectionTitles}
+                  updateSectionTitle={updateSectionTitle}
                 />
               </div>
               
               <div className="order-1 lg:order-2">
                 <div className="sticky top-6">
-                  <ResumePreview resumeData={resumeData} />
+                  <ResumePreview 
+                    resumeData={resumeData} 
+                    sectionTitles={sectionTitles}
+                  />
                 </div>
               </div>
             </div>
