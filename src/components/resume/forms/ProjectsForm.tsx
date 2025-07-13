@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Trash2, X } from "lucide-react";
+import { Plus, Trash2, X, Edit } from "lucide-react";
 import { Project } from "@/types/resume";
 
 interface ProjectsFormProps {
@@ -16,6 +16,7 @@ interface ProjectsFormProps {
 
 export function ProjectsForm({ data, onUpdate }: ProjectsFormProps) {
   const [newTech, setNewTech] = useState<{ [key: string]: string }>({});
+  const [isEditing, setIsEditing] = useState(false);
 
   const addProject = () => {
     const newProject: Project = {
@@ -24,7 +25,8 @@ export function ProjectsForm({ data, onUpdate }: ProjectsFormProps) {
       description: "",
       technologies: [],
       link: "",
-      github: ""
+      github: "",
+      demo: ""
     };
     onUpdate([...data, newProject]);
   };
@@ -62,10 +64,20 @@ export function ProjectsForm({ data, onUpdate }: ProjectsFormProps) {
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <h3 className="text-lg font-semibold">Projects</h3>
-        <Button onClick={addProject} size="sm">
-          <Plus className="w-4 h-4 mr-2" />
-          Add Project
-        </Button>
+        <div className="flex gap-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setIsEditing(!isEditing)}
+          >
+            <Edit className="w-4 h-4 mr-2" />
+            Edit
+          </Button>
+          <Button onClick={addProject} size="sm">
+            <Plus className="w-4 h-4 mr-2" />
+            Add Project
+          </Button>
+        </div>
       </div>
 
       {data.map((project) => (
@@ -79,6 +91,7 @@ export function ProjectsForm({ data, onUpdate }: ProjectsFormProps) {
                 variant="ghost"
                 size="sm"
                 onClick={() => removeProject(project.id)}
+                disabled={!isEditing}
               >
                 <Trash2 className="w-4 h-4" />
               </Button>
@@ -91,6 +104,7 @@ export function ProjectsForm({ data, onUpdate }: ProjectsFormProps) {
                 value={project.name}
                 onChange={(e) => updateProject(project.id, 'name', e.target.value)}
                 placeholder="My Awesome Project"
+                disabled={!isEditing}
               />
             </div>
             
@@ -101,16 +115,18 @@ export function ProjectsForm({ data, onUpdate }: ProjectsFormProps) {
                 onChange={(e) => updateProject(project.id, 'description', e.target.value)}
                 placeholder="Describe what your project does, the problem it solves, and key features..."
                 rows={3}
+                disabled={!isEditing}
               />
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <Label>Project Link</Label>
                 <Input
                   value={project.link || ''}
                   onChange={(e) => updateProject(project.id, 'link', e.target.value)}
                   placeholder="https://myproject.com"
+                  disabled={!isEditing}
                 />
               </div>
               <div>
@@ -119,6 +135,16 @@ export function ProjectsForm({ data, onUpdate }: ProjectsFormProps) {
                   value={project.github || ''}
                   onChange={(e) => updateProject(project.id, 'github', e.target.value)}
                   placeholder="https://github.com/username/repo"
+                  disabled={!isEditing}
+                />
+              </div>
+              <div>
+                <Label>Demo Link</Label>
+                <Input
+                  value={project.demo || ''}
+                  onChange={(e) => updateProject(project.id, 'demo', e.target.value)}
+                  placeholder="https://demo.myproject.com"
+                  disabled={!isEditing}
                 />
               </div>
             </div>
@@ -136,10 +162,12 @@ export function ProjectsForm({ data, onUpdate }: ProjectsFormProps) {
                     }
                   }}
                   placeholder="e.g., React, Node.js, MongoDB"
+                  disabled={!isEditing}
                 />
                 <Button
                   onClick={() => addTechnology(project.id, newTech[project.id] || '')}
                   size="sm"
+                  disabled={!isEditing}
                 >
                   <Plus className="w-4 h-4" />
                 </Button>
@@ -148,12 +176,14 @@ export function ProjectsForm({ data, onUpdate }: ProjectsFormProps) {
                 {project.technologies.map((tech, index) => (
                   <Badge key={index} variant="secondary" className="pr-1">
                     {tech}
-                    <button
-                      onClick={() => removeTechnology(project.id, index)}
-                      className="ml-2 text-muted-foreground hover:text-foreground"
-                    >
-                      <X className="w-3 h-3" />
-                    </button>
+                    {isEditing && (
+                      <button
+                        onClick={() => removeTechnology(project.id, index)}
+                        className="ml-2 text-muted-foreground hover:text-foreground"
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                    )}
                   </Badge>
                 ))}
               </div>

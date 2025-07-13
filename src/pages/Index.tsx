@@ -1,8 +1,8 @@
 
-import { ResumeBuilder } from "@/components/ResumeBuilder";
+import { QuickResumeBuilder } from "@/components/QuickResumeBuilder";
 
 const Index = () => {
-  return <ResumeBuilder />;
+  return <QuickResumeBuilder />;
 };
 
 export default Index;

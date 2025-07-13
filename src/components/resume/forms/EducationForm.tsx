@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, Trash2, Edit } from "lucide-react";
 import { Education } from "@/types/resume";
 
 interface EducationFormProps {
@@ -13,6 +13,8 @@ interface EducationFormProps {
 }
 
 export function EducationForm({ data, onUpdate }: EducationFormProps) {
+  const [isEditing, setIsEditing] = useState(false);
+
   const addEducation = () => {
     const newEdu: Education = {
       id: Date.now().toString(),
@@ -22,6 +24,7 @@ export function EducationForm({ data, onUpdate }: EducationFormProps) {
       startDate: "",
       endDate: "",
       gpa: "",
+      percentage: "",
       location: ""
     };
     onUpdate([...data, newEdu]);
@@ -42,10 +45,20 @@ export function EducationForm({ data, onUpdate }: EducationFormProps) {
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <h3 className="text-lg font-semibold">Education</h3>
-        <Button onClick={addEducation} size="sm">
-          <Plus className="w-4 h-4 mr-2" />
-          Add Education
-        </Button>
+        <div className="flex gap-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setIsEditing(!isEditing)}
+          >
+            <Edit className="w-4 h-4 mr-2" />
+            Edit
+          </Button>
+          <Button onClick={addEducation} size="sm">
+            <Plus className="w-4 h-4 mr-2" />
+            Add Education
+          </Button>
+        </div>
       </div>
 
       {data.map((edu) => (
@@ -59,6 +72,7 @@ export function EducationForm({ data, onUpdate }: EducationFormProps) {
                 variant="ghost"
                 size="sm"
                 onClick={() => removeEducation(edu.id)}
+                disabled={!isEditing}
               >
                 <Trash2 className="w-4 h-4" />
               </Button>
@@ -72,6 +86,7 @@ export function EducationForm({ data, onUpdate }: EducationFormProps) {
                   value={edu.institution}
                   onChange={(e) => updateEducation(edu.id, 'institution', e.target.value)}
                   placeholder="University of California"
+                  disabled={!isEditing}
                 />
               </div>
               <div>
@@ -80,6 +95,7 @@ export function EducationForm({ data, onUpdate }: EducationFormProps) {
                   value={edu.degree}
                   onChange={(e) => updateEducation(edu.id, 'degree', e.target.value)}
                   placeholder="Bachelor's Degree"
+                  disabled={!isEditing}
                 />
               </div>
             </div>
@@ -91,6 +107,7 @@ export function EducationForm({ data, onUpdate }: EducationFormProps) {
                   value={edu.field}
                   onChange={(e) => updateEducation(edu.id, 'field', e.target.value)}
                   placeholder="Computer Science"
+                  disabled={!isEditing}
                 />
               </div>
               <div>
@@ -99,17 +116,19 @@ export function EducationForm({ data, onUpdate }: EducationFormProps) {
                   value={edu.location}
                   onChange={(e) => updateEducation(edu.id, 'location', e.target.value)}
                   placeholder="Berkeley, CA"
+                  disabled={!isEditing}
                 />
               </div>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div>
                 <Label>Start Date</Label>
                 <Input
                   type="month"
                   value={edu.startDate}
                   onChange={(e) => updateEducation(edu.id, 'startDate', e.target.value)}
+                  disabled={!isEditing}
                 />
               </div>
               <div>
@@ -118,6 +137,7 @@ export function EducationForm({ data, onUpdate }: EducationFormProps) {
                   type="month"
                   value={edu.endDate}
                   onChange={(e) => updateEducation(edu.id, 'endDate', e.target.value)}
+                  disabled={!isEditing}
                 />
               </div>
               <div>
@@ -126,6 +146,16 @@ export function EducationForm({ data, onUpdate }: EducationFormProps) {
                   value={edu.gpa || ''}
                   onChange={(e) => updateEducation(edu.id, 'gpa', e.target.value)}
                   placeholder="3.8"
+                  disabled={!isEditing}
+                />
+              </div>
+              <div>
+                <Label>Percentage (Optional)</Label>
+                <Input
+                  value={edu.percentage || ''}
+                  onChange={(e) => updateEducation(edu.id, 'percentage', e.target.value)}
+                  placeholder="85%"
+                  disabled={!isEditing}
                 />
               </div>
             </div>

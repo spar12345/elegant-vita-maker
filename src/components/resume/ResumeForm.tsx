@@ -8,6 +8,7 @@ import { EducationForm } from "./forms/EducationForm";
 import { SkillsForm } from "./forms/SkillsForm";
 import { ProjectsForm } from "./forms/ProjectsForm";
 import { CertificationsForm } from "./forms/CertificationsForm";
+import { AwardsForm } from "./forms/AwardsForm";
 import { ResumeData } from "@/types/resume";
 
 interface ResumeFormProps {
@@ -23,7 +24,7 @@ export function ResumeForm({ resumeData, updateResumeData }: ResumeFormProps) {
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="personal" className="w-full">
-          <TabsList className="grid w-full grid-cols-4 lg:grid-cols-7">
+          <TabsList className="grid w-full grid-cols-4 lg:grid-cols-8">
             <TabsTrigger value="personal">Personal</TabsTrigger>
             <TabsTrigger value="summary">Summary</TabsTrigger>
             <TabsTrigger value="experience">Experience</TabsTrigger>
@@ -31,6 +32,7 @@ export function ResumeForm({ resumeData, updateResumeData }: ResumeFormProps) {
             <TabsTrigger value="skills">Skills</TabsTrigger>
             <TabsTrigger value="projects">Projects</TabsTrigger>
             <TabsTrigger value="certifications">Certs</TabsTrigger>
+            <TabsTrigger value="awards">Awards</TabsTrigger>
           </TabsList>
           
           <div className="mt-6">
@@ -80,6 +82,13 @@ export function ResumeForm({ resumeData, updateResumeData }: ResumeFormProps) {
               <CertificationsForm 
                 data={resumeData.certifications}
                 onUpdate={(data) => updateResumeData('certifications', data)}
+              />
+            </TabsContent>
+            
+            <TabsContent value="awards">
+              <AwardsForm 
+                data={resumeData.awards}
+                onUpdate={(data) => updateResumeData('awards', data)}
               />
             </TabsContent>
           </div>

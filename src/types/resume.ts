@@ -28,13 +28,14 @@ export interface Education {
   startDate: string;
   endDate: string;
   gpa?: string;
+  percentage?: string;
   location: string;
 }
 
 export interface Skills {
   technical: string[];
-  languages: string[];
-  other: string[];
+  softSkills: string[];
+  toolsAndTechnologies: string[];
 }
 
 export interface Project {
@@ -44,6 +45,7 @@ export interface Project {
   technologies: string[];
   link?: string;
   github?: string;
+  demo?: string;
 }
 
 export interface Certification {
@@ -54,6 +56,14 @@ export interface Certification {
   link?: string;
 }
 
+export interface Award {
+  id: string;
+  title: string;
+  issuer: string;
+  date: string;
+  description?: string;
+}
+
 export interface ResumeData {
   personalInfo: PersonalInfo;
   summary: string;
@@ -62,4 +72,5 @@ export interface ResumeData {
   skills: Skills;
   projects: Project[];
   certifications: Certification[];
+  awards: Award[];
 }
