@@ -44,24 +44,40 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
               padding: 20px; 
               background: white;
               color: black;
-              line-height: 1.4;
+              line-height: 1.3;
+              font-size: 12px;
             }
             .resume-container { 
               max-width: 210mm; 
               margin: 0 auto; 
               background: white;
-              padding: 30px;
+              padding: 20px;
             }
-            h1 { font-size: 28px; margin-bottom: 8px; color: #1a1a1a; }
-            h2 { font-size: 18px; margin: 20px 0 10px 0; color: #1a1a1a; border-bottom: 1px solid #e5e7eb; padding-bottom: 4px; }
-            h3 { font-size: 16px; margin: 12px 0 4px 0; color: #1a1a1a; }
-            p, li { font-size: 14px; margin: 4px 0; color: #374151; }
-            .contact-info { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; font-size: 14px; }
-            .contact-links { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 8px; font-size: 14px; }
-            .experience-item, .education-item, .project-item, .cert-item, .award-item { margin-bottom: 15px; }
-            .date-location { float: right; text-align: right; font-style: italic; color: #6b7280; }
-            ul { margin: 8px 0 8px 20px; }
-            .tech-list { color: #6b7280; font-size: 13px; margin-top: 4px; }
+            h1 { font-size: 24px; margin-bottom: 6px; color: #1a1a1a; }
+            h2 { font-size: 16px; margin: 16px 0 8px 0; color: #1a1a1a; border-bottom: 1px solid #e5e7eb; padding-bottom: 3px; }
+            h3 { font-size: 14px; margin: 10px 0 3px 0; color: #1a1a1a; }
+            p, li { font-size: 12px; margin: 2px 0; color: #374151; }
+            .contact-info { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; font-size: 12px; }
+            .contact-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; font-size: 12px; }
+            .experience-item, .education-item, .project-item, .cert-item, .award-item { 
+              margin-bottom: 12px; 
+              display: flex; 
+              justify-content: space-between; 
+              align-items: flex-start;
+            }
+            .left-content { flex: 1; }
+            .right-content { 
+              text-align: right; 
+              font-style: italic; 
+              color: #6b7280; 
+              font-size: 11px;
+              min-width: 100px;
+              margin-left: 10px;
+            }
+            ul { margin: 6px 0 6px 16px; }
+            .tech-list { color: #6b7280; font-size: 11px; margin-top: 3px; }
+            a { color: #000000 !important; text-decoration: none; font-size: 12px; }
+            .link-icon { display: none; }
             @media print { 
               body { -webkit-print-color-adjust: exact; }
               .resume-container { box-shadow: none; margin: 0; padding: 0; }
@@ -95,10 +111,10 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
         href={href} 
         target="_blank" 
         rel="noopener noreferrer" 
-        className="text-gray-600 hover:text-gray-800 inline-flex items-center gap-1"
+        className="text-black hover:text-gray-800 text-xs inline-flex items-center gap-1"
       >
         {displayText}
-        <ExternalLink className="w-3 h-3" />
+        <ExternalLink className="w-2 h-2 link-icon" />
       </a>
     );
   };
@@ -120,19 +136,19 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
       </div>
 
       <Card className="w-full max-w-[8.5in] mx-auto bg-white text-black shadow-lg">
-        <CardContent className="p-8 space-y-6" ref={resumeRef}>
+        <CardContent className="p-6 space-y-5 text-sm" ref={resumeRef}>
           {/* Header */}
-          <div className="text-center border-b border-gray-200 pb-4">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <div className="text-center border-b border-gray-200 pb-3">
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">
               {resumeData.personalInfo.fullName || 'Your Name'}
             </h1>
-            <div className="contact-info flex flex-wrap justify-center gap-4 text-sm text-gray-600">
+            <div className="contact-info flex flex-wrap justify-center gap-3 text-xs text-gray-600">
               {resumeData.personalInfo.email && <span>{resumeData.personalInfo.email}</span>}
               {resumeData.personalInfo.phone && <span>{resumeData.personalInfo.phone}</span>}
               {resumeData.personalInfo.location && <span>{resumeData.personalInfo.location}</span>}
             </div>
             {(resumeData.personalInfo.linkedin || resumeData.personalInfo.github || resumeData.personalInfo.website) && (
-              <div className="contact-links flex flex-wrap justify-center gap-4 text-sm mt-2">
+              <div className="contact-links flex flex-wrap justify-center gap-3 text-xs mt-2">
                 {resumeData.personalInfo.linkedin && createClickableLink(resumeData.personalInfo.linkedin, "LinkedIn")}
                 {resumeData.personalInfo.github && createClickableLink(resumeData.personalInfo.github, "GitHub")}
                 {resumeData.personalInfo.website && createClickableLink(resumeData.personalInfo.website, "Portfolio")}
@@ -143,41 +159,39 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
           {/* Summary */}
           {resumeData.summary && (
             <section>
-              <h2 className="text-xl font-bold text-gray-900 mb-3 border-b border-gray-200 pb-1">
+              <h2 className="text-lg font-bold text-gray-900 mb-2 border-b border-gray-200 pb-1">
                 PROFESSIONAL SUMMARY
               </h2>
-              <p className="text-sm text-gray-700 leading-relaxed">{resumeData.summary}</p>
+              <p className="text-xs text-gray-700 leading-relaxed">{resumeData.summary}</p>
             </section>
           )}
 
           {/* Experience */}
           {resumeData.experience.length > 0 && (
             <section>
-              <h2 className="text-xl font-bold text-gray-900 mb-3 border-b border-gray-200 pb-1">
+              <h2 className="text-lg font-bold text-gray-900 mb-2 border-b border-gray-200 pb-1">
                 PROFESSIONAL EXPERIENCE
               </h2>
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {resumeData.experience.map((exp) => (
                   <div key={exp.id} className="experience-item">
-                    <div className="flex justify-between items-start mb-1">
-                      <div>
-                        <h3 className="font-bold text-gray-900">{exp.position}</h3>
-                        <p className="text-gray-700 font-medium">{exp.company}</p>
-                      </div>
-                      <div className="text-right text-sm text-gray-600">
-                        <p>{exp.location}</p>
-                        <p>{formatDate(exp.startDate)} - {exp.current ? 'Present' : formatDate(exp.endDate)}</p>
-                      </div>
+                    <div className="left-content">
+                      <h3 className="font-bold text-gray-900 text-sm">{exp.position}</h3>
+                      <p className="text-gray-700 font-medium text-sm">{exp.company}</p>
+                      <ul className="ml-0 mt-1">
+                        {exp.description.map((desc, index) => (
+                          desc.trim() && (
+                            <li key={index} className="text-xs text-gray-700 mb-1">
+                              • {desc}
+                            </li>
+                          )
+                        ))}
+                      </ul>
                     </div>
-                    <ul className="ml-0 mt-2">
-                      {exp.description.map((desc, index) => (
-                        desc.trim() && (
-                          <li key={index} className="text-sm text-gray-700 mb-1">
-                            • {desc}
-                          </li>
-                        )
-                      ))}
-                    </ul>
+                    <div className="right-content">
+                      <p className="text-xs">{exp.location}</p>
+                      <p className="text-xs">{formatDate(exp.startDate)} - {exp.current ? 'Present' : formatDate(exp.endDate)}</p>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -187,26 +201,26 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
           {/* Education */}
           {resumeData.education.length > 0 && (
             <section>
-              <h2 className="text-xl font-bold text-gray-900 mb-3 border-b border-gray-200 pb-1">
+              <h2 className="text-lg font-bold text-gray-900 mb-2 border-b border-gray-200 pb-1">
                 EDUCATION
               </h2>
-              <div className="space-y-3">
+              <div className="space-y-2">
                 {resumeData.education.map((edu) => (
-                  <div key={edu.id} className="education-item flex justify-between items-start">
-                    <div>
-                      <h3 className="font-bold text-gray-900">{edu.degree} in {edu.field}</h3>
-                      <p className="text-gray-700">{edu.institution}</p>
+                  <div key={edu.id} className="education-item">
+                    <div className="left-content">
+                      <h3 className="font-bold text-gray-900 text-sm">{edu.degree} in {edu.field}</h3>
+                      <p className="text-gray-700 text-sm">{edu.institution}</p>
                       {(edu.gpa || edu.percentage) && (
-                        <p className="text-sm text-gray-600">
+                        <p className="text-xs text-gray-600">
                           {edu.gpa && `GPA: ${edu.gpa}`}
                           {edu.gpa && edu.percentage && ' | '}
                           {edu.percentage && `Score: ${edu.percentage}`}
                         </p>
                       )}
                     </div>
-                    <div className="text-right text-sm text-gray-600">
-                      <p>{edu.location}</p>
-                      <p>{formatDate(edu.startDate)} - {formatDate(edu.endDate)}</p>
+                    <div className="right-content">
+                      <p className="text-xs">{edu.location}</p>
+                      <p className="text-xs">{formatDate(edu.startDate)} - {formatDate(edu.endDate)}</p>
                     </div>
                   </div>
                 ))}
@@ -217,26 +231,26 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
           {/* Skills */}
           {(resumeData.skills.technical.length > 0 || resumeData.skills.softSkills.length > 0 || resumeData.skills.toolsAndTechnologies.length > 0) && (
             <section>
-              <h2 className="text-xl font-bold text-gray-900 mb-3 border-b border-gray-200 pb-1">
+              <h2 className="text-lg font-bold text-gray-900 mb-2 border-b border-gray-200 pb-1">
                 SKILLS
               </h2>
-              <div className="space-y-2">
+              <div className="space-y-1">
                 {resumeData.skills.technical.length > 0 && (
                   <div>
-                    <span className="font-bold text-gray-900">Technical Skills: </span>
-                    <span className="text-sm text-gray-700">{resumeData.skills.technical.join(', ')}</span>
+                    <span className="font-bold text-gray-900 text-sm">Technical Skills: </span>
+                    <span className="text-xs text-gray-700">{resumeData.skills.technical.join(', ')}</span>
                   </div>
                 )}
                 {resumeData.skills.toolsAndTechnologies.length > 0 && (
                   <div>
-                    <span className="font-bold text-gray-900">Tools & Technologies: </span>
-                    <span className="text-sm text-gray-700">{resumeData.skills.toolsAndTechnologies.join(', ')}</span>
+                    <span className="font-bold text-gray-900 text-sm">Tools & Technologies: </span>
+                    <span className="text-xs text-gray-700">{resumeData.skills.toolsAndTechnologies.join(', ')}</span>
                   </div>
                 )}
                 {resumeData.skills.softSkills.length > 0 && (
                   <div>
-                    <span className="font-bold text-gray-900">Soft Skills: </span>
-                    <span className="text-sm text-gray-700">{resumeData.skills.softSkills.join(', ')}</span>
+                    <span className="font-bold text-gray-900 text-sm">Soft Skills: </span>
+                    <span className="text-xs text-gray-700">{resumeData.skills.softSkills.join(', ')}</span>
                   </div>
                 )}
               </div>
@@ -246,27 +260,29 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
           {/* Projects */}
           {resumeData.projects.length > 0 && (
             <section>
-              <h2 className="text-xl font-bold text-gray-900 mb-3 border-b border-gray-200 pb-1">
+              <h2 className="text-lg font-bold text-gray-900 mb-2 border-b border-gray-200 pb-1">
                 PROJECTS
               </h2>
-              <div className="space-y-3">
+              <div className="space-y-2">
                 {resumeData.projects.map((project) => (
                   <div key={project.id} className="project-item">
-                    <div className="flex justify-between items-start mb-1">
-                      <h3 className="font-bold text-gray-900">{project.name}</h3>
-                      <div className="text-sm flex gap-2">
+                    <div className="left-content">
+                      <h3 className="font-bold text-gray-900 text-sm">{project.name}</h3>
+                      <p className="text-xs text-gray-700 mb-1">{project.description}</p>
+                      {project.technologies.length > 0 && (
+                        <p className="tech-list text-xs text-gray-600">
+                          <span className="font-medium">Technologies: </span>
+                          {project.technologies.join(', ')}
+                        </p>
+                      )}
+                    </div>
+                    <div className="right-content">
+                      <div className="text-xs flex flex-col gap-1">
                         {project.link && createClickableLink(project.link, "Live")}
                         {project.github && createClickableLink(project.github, "GitHub")}
                         {project.demo && createClickableLink(project.demo, "Demo")}
                       </div>
                     </div>
-                    <p className="text-sm text-gray-700 mb-1">{project.description}</p>
-                    {project.technologies.length > 0 && (
-                      <p className="tech-list text-sm text-gray-600">
-                        <span className="font-medium">Technologies: </span>
-                        {project.technologies.join(', ')}
-                      </p>
-                    )}
                   </div>
                 ))}
               </div>
@@ -276,18 +292,18 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
           {/* Certifications */}
           {resumeData.certifications.length > 0 && (
             <section>
-              <h2 className="text-xl font-bold text-gray-900 mb-3 border-b border-gray-200 pb-1">
+              <h2 className="text-lg font-bold text-gray-900 mb-2 border-b border-gray-200 pb-1">
                 CERTIFICATIONS
               </h2>
               <div className="space-y-2">
                 {resumeData.certifications.map((cert) => (
-                  <div key={cert.id} className="cert-item flex justify-between items-start">
-                    <div>
-                      <h3 className="font-bold text-gray-900">{cert.name}</h3>
-                      <p className="text-gray-700">{cert.issuer}</p>
+                  <div key={cert.id} className="cert-item">
+                    <div className="left-content">
+                      <h3 className="font-bold text-gray-900 text-sm">{cert.name}</h3>
+                      <p className="text-gray-700 text-sm">{cert.issuer}</p>
                     </div>
-                    <div className="text-right text-sm text-gray-600">
-                      <p>{formatDate(cert.date)}</p>
+                    <div className="right-content">
+                      <p className="text-xs">{formatDate(cert.date)}</p>
                       {cert.link && createClickableLink(cert.link, "View Certificate")}
                     </div>
                   </div>
@@ -299,19 +315,19 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
           {/* Awards */}
           {resumeData.awards.length > 0 && (
             <section>
-              <h2 className="text-xl font-bold text-gray-900 mb-3 border-b border-gray-200 pb-1">
+              <h2 className="text-lg font-bold text-gray-900 mb-2 border-b border-gray-200 pb-1">
                 AWARDS & ACHIEVEMENTS
               </h2>
               <div className="space-y-2">
                 {resumeData.awards.map((award) => (
-                  <div key={award.id} className="award-item flex justify-between items-start">
-                    <div>
-                      <h3 className="font-bold text-gray-900">{award.title}</h3>
-                      <p className="text-gray-700">{award.issuer}</p>
-                      {award.description && <p className="text-sm text-gray-600 mt-1">{award.description}</p>}
+                  <div key={award.id} className="award-item">
+                    <div className="left-content">
+                      <h3 className="font-bold text-gray-900 text-sm">{award.title}</h3>
+                      <p className="text-gray-700 text-sm">{award.issuer}</p>
+                      {award.description && <p className="text-xs text-gray-600 mt-1">{award.description}</p>}
                     </div>
-                    <div className="text-right text-sm text-gray-600">
-                      <p>{formatDate(award.date)}</p>
+                    <div className="right-content">
+                      <p className="text-xs">{formatDate(award.date)}</p>
                     </div>
                   </div>
                 ))}

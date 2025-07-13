@@ -1,4 +1,5 @@
 
+import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PersonalInfoForm } from "./forms/PersonalInfoForm";
@@ -9,6 +10,7 @@ import { SkillsForm } from "./forms/SkillsForm";
 import { ProjectsForm } from "./forms/ProjectsForm";
 import { CertificationsForm } from "./forms/CertificationsForm";
 import { AwardsForm } from "./forms/AwardsForm";
+import { EditableSectionHeading } from "./EditableSectionHeading";
 import { ResumeData } from "@/types/resume";
 
 interface ResumeFormProps {
@@ -17,6 +19,24 @@ interface ResumeFormProps {
 }
 
 export function ResumeForm({ resumeData, updateResumeData }: ResumeFormProps) {
+  const [sectionTitles, setSectionTitles] = useState({
+    personal: "Personal Information",
+    summary: "Professional Summary",
+    experience: "Professional Experience",
+    education: "Education",
+    skills: "Skills",
+    projects: "Projects",
+    certifications: "Certifications",
+    awards: "Awards & Achievements"
+  });
+
+  const updateSectionTitle = (section: keyof typeof sectionTitles, newTitle: string) => {
+    setSectionTitles(prev => ({
+      ...prev,
+      [section]: newTitle
+    }));
+  };
+
   return (
     <Card className="w-full">
       <CardHeader>
@@ -37,6 +57,10 @@ export function ResumeForm({ resumeData, updateResumeData }: ResumeFormProps) {
           
           <div className="mt-6">
             <TabsContent value="personal">
+              <EditableSectionHeading 
+                title={sectionTitles.personal}
+                onTitleChange={(title) => updateSectionTitle('personal', title)}
+              />
               <PersonalInfoForm 
                 data={resumeData.personalInfo}
                 onUpdate={(data) => updateResumeData('personalInfo', data)}
@@ -44,6 +68,10 @@ export function ResumeForm({ resumeData, updateResumeData }: ResumeFormProps) {
             </TabsContent>
             
             <TabsContent value="summary">
+              <EditableSectionHeading 
+                title={sectionTitles.summary}
+                onTitleChange={(title) => updateSectionTitle('summary', title)}
+              />
               <SummaryForm 
                 data={resumeData.summary}
                 onUpdate={(data) => updateResumeData('summary', data)}
@@ -51,6 +79,10 @@ export function ResumeForm({ resumeData, updateResumeData }: ResumeFormProps) {
             </TabsContent>
             
             <TabsContent value="experience">
+              <EditableSectionHeading 
+                title={sectionTitles.experience}
+                onTitleChange={(title) => updateSectionTitle('experience', title)}
+              />
               <ExperienceForm 
                 data={resumeData.experience}
                 onUpdate={(data) => updateResumeData('experience', data)}
@@ -58,6 +90,10 @@ export function ResumeForm({ resumeData, updateResumeData }: ResumeFormProps) {
             </TabsContent>
             
             <TabsContent value="education">
+              <EditableSectionHeading 
+                title={sectionTitles.education}
+                onTitleChange={(title) => updateSectionTitle('education', title)}
+              />
               <EducationForm 
                 data={resumeData.education}
                 onUpdate={(data) => updateResumeData('education', data)}
@@ -65,6 +101,10 @@ export function ResumeForm({ resumeData, updateResumeData }: ResumeFormProps) {
             </TabsContent>
             
             <TabsContent value="skills">
+              <EditableSectionHeading 
+                title={sectionTitles.skills}
+                onTitleChange={(title) => updateSectionTitle('skills', title)}
+              />
               <SkillsForm 
                 data={resumeData.skills}
                 onUpdate={(data) => updateResumeData('skills', data)}
@@ -72,6 +112,10 @@ export function ResumeForm({ resumeData, updateResumeData }: ResumeFormProps) {
             </TabsContent>
             
             <TabsContent value="projects">
+              <EditableSectionHeading 
+                title={sectionTitles.projects}
+                onTitleChange={(title) => updateSectionTitle('projects', title)}
+              />
               <ProjectsForm 
                 data={resumeData.projects}
                 onUpdate={(data) => updateResumeData('projects', data)}
@@ -79,6 +123,10 @@ export function ResumeForm({ resumeData, updateResumeData }: ResumeFormProps) {
             </TabsContent>
             
             <TabsContent value="certifications">
+              <EditableSectionHeading 
+                title={sectionTitles.certifications}
+                onTitleChange={(title) => updateSectionTitle('certifications', title)}
+              />
               <CertificationsForm 
                 data={resumeData.certifications}
                 onUpdate={(data) => updateResumeData('certifications', data)}
@@ -86,6 +134,10 @@ export function ResumeForm({ resumeData, updateResumeData }: ResumeFormProps) {
             </TabsContent>
             
             <TabsContent value="awards">
+              <EditableSectionHeading 
+                title={sectionTitles.awards}
+                onTitleChange={(title) => updateSectionTitle('awards', title)}
+              />
               <AwardsForm 
                 data={resumeData.awards}
                 onUpdate={(data) => updateResumeData('awards', data)}
