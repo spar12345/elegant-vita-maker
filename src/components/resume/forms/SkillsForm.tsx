@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Plus, X, Edit } from "lucide-react";
+import { Plus, X } from "lucide-react";
 import { Skills } from "@/types/resume";
 
 interface SkillsFormProps {
@@ -14,7 +14,6 @@ interface SkillsFormProps {
 
 export function SkillsForm({ data, onUpdate }: SkillsFormProps) {
   const [newSkill, setNewSkill] = useState({ technical: "", softSkills: "", toolsAndTechnologies: "" });
-  const [isEditing, setIsEditing] = useState(false);
 
   const addSkill = (category: keyof Skills, skill: string) => {
     if (skill.trim()) {
@@ -44,17 +43,7 @@ export function SkillsForm({ data, onUpdate }: SkillsFormProps) {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h3 className="text-lg font-semibold">Skills</h3>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => setIsEditing(!isEditing)}
-        >
-          <Edit className="w-4 h-4 mr-2" />
-          Edit
-        </Button>
-      </div>
+      <h3 className="text-lg font-semibold">Skills</h3>
 
       <div>
         <Label className="text-base font-semibold">Technical Skills</Label>
@@ -67,12 +56,10 @@ export function SkillsForm({ data, onUpdate }: SkillsFormProps) {
             onChange={(e) => setNewSkill({ ...newSkill, technical: e.target.value })}
             onKeyPress={(e) => handleKeyPress(e, 'technical', newSkill.technical)}
             placeholder="e.g., React, Python, JavaScript"
-            disabled={!isEditing}
           />
           <Button
             onClick={() => addSkill('technical', newSkill.technical)}
             size="sm"
-            disabled={!isEditing}
           >
             <Plus className="w-4 h-4" />
           </Button>
@@ -81,14 +68,12 @@ export function SkillsForm({ data, onUpdate }: SkillsFormProps) {
           {data.technical.map((skill, index) => (
             <Badge key={index} variant="secondary" className="pr-1">
               {skill}
-              {isEditing && (
-                <button
-                  onClick={() => removeSkill('technical', index)}
-                  className="ml-2 text-muted-foreground hover:text-foreground"
-                >
-                  <X className="w-3 h-3" />
-                </button>
-              )}
+              <button
+                onClick={() => removeSkill('technical', index)}
+                className="ml-2 text-muted-foreground hover:text-foreground"
+              >
+                <X className="w-3 h-3" />
+              </button>
             </Badge>
           ))}
         </div>
@@ -105,12 +90,10 @@ export function SkillsForm({ data, onUpdate }: SkillsFormProps) {
             onChange={(e) => setNewSkill({ ...newSkill, toolsAndTechnologies: e.target.value })}
             onKeyPress={(e) => handleKeyPress(e, 'toolsAndTechnologies', newSkill.toolsAndTechnologies)}
             placeholder="e.g., AWS, Docker, Git, Figma"
-            disabled={!isEditing}
           />
           <Button
             onClick={() => addSkill('toolsAndTechnologies', newSkill.toolsAndTechnologies)}
             size="sm"
-            disabled={!isEditing}
           >
             <Plus className="w-4 h-4" />
           </Button>
@@ -119,14 +102,12 @@ export function SkillsForm({ data, onUpdate }: SkillsFormProps) {
           {data.toolsAndTechnologies.map((skill, index) => (
             <Badge key={index} variant="secondary" className="pr-1">
               {skill}
-              {isEditing && (
-                <button
-                  onClick={() => removeSkill('toolsAndTechnologies', index)}
-                  className="ml-2 text-muted-foreground hover:text-foreground"
-                >
-                  <X className="w-3 h-3" />
-                </button>
-              )}
+              <button
+                onClick={() => removeSkill('toolsAndTechnologies', index)}
+                className="ml-2 text-muted-foreground hover:text-foreground"
+              >
+                <X className="w-3 h-3" />
+              </button>
             </Badge>
           ))}
         </div>
@@ -143,12 +124,10 @@ export function SkillsForm({ data, onUpdate }: SkillsFormProps) {
             onChange={(e) => setNewSkill({ ...newSkill, softSkills: e.target.value })}
             onKeyPress={(e) => handleKeyPress(e, 'softSkills', newSkill.softSkills)}
             placeholder="e.g., Leadership, Communication, Team Collaboration"
-            disabled={!isEditing}
           />
           <Button
             onClick={() => addSkill('softSkills', newSkill.softSkills)}
             size="sm"
-            disabled={!isEditing}
           >
             <Plus className="w-4 h-4" />
           </Button>
@@ -157,14 +136,12 @@ export function SkillsForm({ data, onUpdate }: SkillsFormProps) {
           {data.softSkills.map((skill, index) => (
             <Badge key={index} variant="secondary" className="pr-1">
               {skill}
-              {isEditing && (
-                <button
-                  onClick={() => removeSkill('softSkills', index)}
-                  className="ml-2 text-muted-foreground hover:text-foreground"
-                >
-                  <X className="w-3 h-3" />
-                </button>
-              )}
+              <button
+                onClick={() => removeSkill('softSkills', index)}
+                className="ml-2 text-muted-foreground hover:text-foreground"
+              >
+                <X className="w-3 h-3" />
+              </button>
             </Badge>
           ))}
         </div>

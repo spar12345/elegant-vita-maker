@@ -19,11 +19,12 @@ const initialResumeData: ResumeData = {
   education: [],
   skills: {
     technical: [],
-    languages: [],
-    other: []
+    softSkills: [],
+    toolsAndTechnologies: []
   },
   projects: [],
-  certifications: []
+  certifications: [],
+  awards: []
 };
 
 export function ResumeBuilder() {

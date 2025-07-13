@@ -27,10 +27,8 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
     if (!resumeRef.current) return;
 
     try {
-      // Use html2pdf or similar library for better PDF generation
       const element = resumeRef.current;
       
-      // Create a print-friendly version
       const printWindow = window.open('', '_blank');
       if (!printWindow) return;
 
@@ -55,15 +53,13 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
               padding: 30px;
             }
             h1 { font-size: 28px; margin-bottom: 8px; color: #1a1a1a; }
-            h2 { font-size: 18px; margin: 20px 0 10px 0; color: #2563eb; border-bottom: 2px solid #2563eb; padding-bottom: 4px; }
+            h2 { font-size: 18px; margin: 20px 0 10px 0; color: #1a1a1a; border-bottom: 1px solid #e5e7eb; padding-bottom: 4px; }
             h3 { font-size: 16px; margin: 12px 0 4px 0; color: #1a1a1a; }
             p, li { font-size: 14px; margin: 4px 0; color: #374151; }
             .contact-info { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; font-size: 14px; }
             .contact-links { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 8px; font-size: 14px; }
             .experience-item, .education-item, .project-item, .cert-item, .award-item { margin-bottom: 15px; }
             .date-location { float: right; text-align: right; font-style: italic; color: #6b7280; }
-            .skills-section { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; }
-            .skill-tag { background: #f3f4f6; padding: 4px 8px; border-radius: 4px; font-size: 12px; }
             ul { margin: 8px 0 8px 20px; }
             .tech-list { color: #6b7280; font-size: 13px; margin-top: 4px; }
             @media print { 
@@ -99,7 +95,7 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
         href={href} 
         target="_blank" 
         rel="noopener noreferrer" 
-        className="text-blue-600 hover:text-blue-800 inline-flex items-center gap-1"
+        className="text-gray-600 hover:text-gray-800 inline-flex items-center gap-1"
       >
         {displayText}
         <ExternalLink className="w-3 h-3" />
@@ -126,7 +122,7 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
       <Card className="w-full max-w-[8.5in] mx-auto bg-white text-black shadow-lg">
         <CardContent className="p-8 space-y-6" ref={resumeRef}>
           {/* Header */}
-          <div className="text-center border-b-2 border-blue-600 pb-4">
+          <div className="text-center border-b border-gray-200 pb-4">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">
               {resumeData.personalInfo.fullName || 'Your Name'}
             </h1>
@@ -147,7 +143,7 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
           {/* Summary */}
           {resumeData.summary && (
             <section>
-              <h2 className="text-xl font-bold text-blue-600 mb-3 border-b-2 border-blue-600 pb-1">
+              <h2 className="text-xl font-bold text-gray-900 mb-3 border-b border-gray-200 pb-1">
                 PROFESSIONAL SUMMARY
               </h2>
               <p className="text-sm text-gray-700 leading-relaxed">{resumeData.summary}</p>
@@ -157,7 +153,7 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
           {/* Experience */}
           {resumeData.experience.length > 0 && (
             <section>
-              <h2 className="text-xl font-bold text-blue-600 mb-3 border-b-2 border-blue-600 pb-1">
+              <h2 className="text-xl font-bold text-gray-900 mb-3 border-b border-gray-200 pb-1">
                 PROFESSIONAL EXPERIENCE
               </h2>
               <div className="space-y-4">
@@ -191,7 +187,7 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
           {/* Education */}
           {resumeData.education.length > 0 && (
             <section>
-              <h2 className="text-xl font-bold text-blue-600 mb-3 border-b-2 border-blue-600 pb-1">
+              <h2 className="text-xl font-bold text-gray-900 mb-3 border-b border-gray-200 pb-1">
                 EDUCATION
               </h2>
               <div className="space-y-3">
@@ -221,7 +217,7 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
           {/* Skills */}
           {(resumeData.skills.technical.length > 0 || resumeData.skills.softSkills.length > 0 || resumeData.skills.toolsAndTechnologies.length > 0) && (
             <section>
-              <h2 className="text-xl font-bold text-blue-600 mb-3 border-b-2 border-blue-600 pb-1">
+              <h2 className="text-xl font-bold text-gray-900 mb-3 border-b border-gray-200 pb-1">
                 SKILLS
               </h2>
               <div className="space-y-2">
@@ -250,7 +246,7 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
           {/* Projects */}
           {resumeData.projects.length > 0 && (
             <section>
-              <h2 className="text-xl font-bold text-blue-600 mb-3 border-b-2 border-blue-600 pb-1">
+              <h2 className="text-xl font-bold text-gray-900 mb-3 border-b border-gray-200 pb-1">
                 PROJECTS
               </h2>
               <div className="space-y-3">
@@ -280,7 +276,7 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
           {/* Certifications */}
           {resumeData.certifications.length > 0 && (
             <section>
-              <h2 className="text-xl font-bold text-blue-600 mb-3 border-b-2 border-blue-600 pb-1">
+              <h2 className="text-xl font-bold text-gray-900 mb-3 border-b border-gray-200 pb-1">
                 CERTIFICATIONS
               </h2>
               <div className="space-y-2">
@@ -303,7 +299,7 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
           {/* Awards */}
           {resumeData.awards.length > 0 && (
             <section>
-              <h2 className="text-xl font-bold text-blue-600 mb-3 border-b-2 border-blue-600 pb-1">
+              <h2 className="text-xl font-bold text-gray-900 mb-3 border-b border-gray-200 pb-1">
                 AWARDS & ACHIEVEMENTS
               </h2>
               <div className="space-y-2">
